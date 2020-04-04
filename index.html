@@ -1,4 +1,39 @@
-<p>Test page</p>
-<p>testing again</p>
-<p>modifying file</p>
-modified again
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Include meta tag to ensure proper rendering and touch zooming -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	</head>
+	
+	<body>
+		<div data-role="page" id="pageone">
+			<div data-role="header">
+				<h1>My App</h1>
+			</div>
+			<div data-role="main" class="ui-content">
+				Hello
+				<a href="#pagetwo"> go to page 2</a>
+			</div>
+			
+			<div data-role="footer">&copy; 15037963   2020</div>
+		</div>
+		
+		
+		<!--second page -->
+		<div data-role="page" id="pagetwo">
+			<div data-role="header">
+				<h1>My App</h1>
+			</div>
+			<div data-role="main" class="ui-content">
+				<a href="#pageone"> go to page 1</a>
+			</div>
+			
+			<div data-role="footer">&copy; 15037963   2020</div>
+		</div>
+	</body>
+	
+</html>	
