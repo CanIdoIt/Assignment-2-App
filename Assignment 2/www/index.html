@@ -10,11 +10,37 @@
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
 		<script>
+			//multidemsional array
+			var medicine = [["med name",0,0,0,0,0],
+			
+							];
 			function addMedToList(){
 				var medName = $("#medname").val();
-				var medTime = $("#firstdose").val();
-				alert(medName +": "  + medTime);
+				var medTime1 = $("#firstdose").val();
+				var medTime2 = $("#2nddose").val();
+				var medTime3 = $("#3rddose").val();
+				var medTime4 = $("#4thdose").val();
+				var medTime5 = $("#5thdose").val();
 				
+				//medicine[medName] = medTime1;
+				medicine.push([medName,medTime1,medTime2,medTime3,medTime4,medTime5 ]);
+				alert(JSON.stringify(medicine));	
+			}
+			function showMedList(){
+				$.mobile.changePage("#pagetwo");
+				$("#allMeds").text(JSON.stringify(medicine));
+				output = "";
+
+				for(var key in medicine){
+					output += key + ": " + medicine[key] + "<br/>";
+
+					data = key + ": " + medicine[key];
+					$('<li>').append('<a href="#">' + '<b>' + data + '</b>'+ '</a>').appendTo("#medlist");
+				}
+				$("#allMeds").html(output);
+
+				
+			
 			}
 		</script>
 	</head>
@@ -65,7 +91,7 @@
 						  <input type="time" name="5thdose" id="5thdose" data-corners="true" data-shadow="true">
 						</div>
 						<button class="ui-btn ui-shadow" data-corners="true" data-shadow="true" data-inlin="true">Add Med</button>
-						<input type="submit" value="Add Med" onclick="addMedToList()">
+						<input type="submit" value="Add Med" data-inline="true" onclick="addMedToList()">
 					  </form>
 					  
 					</div>
@@ -158,7 +184,9 @@
 						</div>
 						<button class="ui-btn ui-shadow" data-corners="true" data-shadow="true">Add Med</button>
 					  </form>
+					  
 					</div>
+					<input type="submit" value="show med list" data-inline="true" onclick="showMedList()">
 				</div>
 			</div>
 
@@ -190,6 +218,10 @@
 			</div>
 			<div data-role="main" class="ui-content">
 				<a href="#pageone"> go to page 1</a>
+				<div id="allMeds">
+					<ul data-role="listview" data-inset="true" id="medlist"></ul>
+				</div>
+
 			</div>
 			
 			<div data-role="footer" data-position="fixed" data-fullscreen="true">&copy; 15037963   2020</div>
