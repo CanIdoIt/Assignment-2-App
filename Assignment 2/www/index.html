@@ -4,57 +4,18 @@
 		<!-- Include meta tag to ensure proper rendering and touch zooming -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="stylesheet.css" />
+		<script type='text/javascript' src='clock.js'></script>
 
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		
+		
 
 		<script>
-			//multidemsional array
-			var medicine = [[],
-			];
+	
 			
-			function addMedToList(){
-				var medName = $("#medname").val();
-				var medTime1 = $("#firstdose").val();
-				var medTime2 = $("#2nddose").val();
-				var medTime3 = $("#3rddose").val();
-				var medTime4 = $("#4thdose").val();
-				var medTime5 = $("#5thdose").val();
-				
-				
-				
-				medicine.push({medName,medTime1,medTime2,medTime3, medTime4,medTime5});
-				alert(JSON.stringify(medicine));
-
-				$("#medname").val('');
-				$("#firstdose").val('');
-				$("#2nddose").val('');
-				$("#3rddose").val('');
-				$("#4thdose").val('');
-				$("#5thdose").val('');
-			}
-		
-			function showMedList(){
-				$.mobile.changePage("#pagetwo");
-				$("#medlist").text(JSON.stringify(medicine));//keep this
-				
-				//$.each(medicine, function(index, value){
-				//	$("#allMeds").last().after(value.medname + value.dosages);
-				//});
-				output = "";
-
-				for(var key in medicine){
-					//output += key + ": " + medicine[key] + "<br/>";
-
-					data = key + ": " + medicine[key];
-					$('<li>').append('<a href="#">' + '<b>' + data + '</b>'+ '</a>').appendTo("#medlist");
-				}
-				
-				//$("#allMeds").html(output);
-				
-			}
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+			//var medicine = [[]];
 			var med={};
 			function addMedToList1(){
 				 medName1 = $("#medname1").val();
@@ -64,25 +25,55 @@
 				alert(JSON.stringify(med));
 				$("#medname1").val('');
 				$("#firstdose1").val('');
+				
+				
 
 			}
+			
+			
 			function showMedList1(){
 				$.mobile.changePage("#pagetwo");
-				$("#medlist1").text(JSON.stringify(med));//keep this
+				//$("#allMeds").text(JSON.stringify(med));//keep this
 				
-				//$.each(medicine, function(index, value){
-				//	$("#allMeds").last().after(value.medname + value.dosages);
-				//});
-				output = "";
+				//output = "";
+				//data = "";
 
 				for(var key in med){
-					//output += key + ": " + medicine[key] + "<br/>";
+					//output += key + "-> " + med[key] + "<hr/>";
 
 					data = key + ": " + med[key];
-					$('<li>').append('<a href="#">' + '<b>' + data + '</b>'+ '</a>').appendTo("#medlist1");
+					$('<li>').append('<a href="#" class="ui-btn">' + data + '</a>').appendTo("#medlist"); 
+					
 				}
+				//$("#allMeds").html(output);
 			}
+			
+			function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML =
+  h + ":" + m + ":" + s;
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+		$(document).ready(startTime);
+		//$( window ).on( "load", startTime );
 		</script>
+		<style>
+#demo {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 0px;
+  background-color: #fdfbfd;
+}
+</style>
 	</head>
 	
 	<body>
@@ -107,6 +98,43 @@
 			</div>
 
 			<div data-role="main" class="ui-content">
+			
+					<div id="txt"></div>
+					
+				<p id="demo"></p>
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
+
+					
 				<a href="#pagetwo"> go to page 2</a>
 				<p>Use this form to create your medicine list</p>
 
@@ -123,41 +151,12 @@
 							<input type="time" name="firstdose1" id="firstdose1" data-corners="true" data-shadow="true">
 						</div>
 						<!--	<input type="submit" value="Add Med" data-inline="true" onclick="addMedToList()"> -->
-							<button id="addMed1" onclick="addMedToList1()">Add med</button>
+							<button onclick="addMedToList1()">Add med</button>
 						  </form>
 					</div>
-
-				<div data-role="collapsible-set">
-				 <div data-role="collapsible" data-collapsed="true">
-					<!--automatically becomes a button-->
-					<h3>Add medication 1</h3>
-					<form method="post" action="#">
-						<div class="ui-field-contain">
-						  <label for="medname" data-corners="true" data-shadow="true">Medicine name:</label>
-						  <input type="text" name="medname" id="medname" data-corners="true" data-shadow="true">
-							
-						  <label for="firstdose"data-corners="true" data-shadow="true" >First dose:</label>
-						  <input type="time" name="firstdose" id="firstdose" data-corners="true" data-shadow="true">
-						  <label for="2nddose" data-corners="true" data-shadow="true">Second dose:</label>
-						  <input type="time" name="2nddose" id="2nddose" data-corners="true" data-shadow="true">
-						  <label for="3rddose" data-corners="true" data-shadow="true">Third dose dose:</label>
-						  <input type="time" name="3rddose" id="3rddose" data-corners="true" data-shadow="true">
-						  <label for="4thdose" ata-corners="true" data-shadow="true" >Fourth dose:</label>
-						  <input type="time" name="4thdose" id="4thdose" data-corners="true" data-shadow="true">
-						  <label for="5thdose" data-corners="true" data-shadow="true">Fifth dose:</label>
-						  <input type="time" name="5thdose" id="5thdose" data-corners="true" data-shadow="true">
-						</div>
-						
-					<!--	<input type="submit" value="Add Med" data-inline="true" onclick="addMedToList()"> -->
-						<button id="addMed" onclick="addMedToList()">Add med</button>
-					  </form>
-					  
+  
 					</div>
-			
-					
-					  
-					</div>
-					<input type="submit" value="show med list1" data-inline="true" onclick="showMedList()">
+					<!-- <input type="submit" value="show med list1" data-inline="true" onclick="showMedList()">-->
 					<input type="submit" value="show med list" data-inline="true" onclick="showMedList1()">
 				</div>
 			</div>
@@ -191,15 +190,17 @@
 			<div data-role="main" class="ui-content">
 				<a href="#pageone"> go to page 1</a>
 				
-
-				<div id="allMeds1">
-					<ul data-role="listview" data-inset="true" id="medlist1"></ul>
-				</div>
-
-			</div>
+				
+				<div id="allMeds" data-role="">
+					<ul data-role="listview" data-inset="true" id="medlist"></ul> 
+				</div> 
+		
 			
 			<div data-role="footer" data-position="fixed" data-fullscreen="true">&copy; 15037963   2020</div>
 		</div>
+		
+		
+		
 	</body>
 	
 </html>	
