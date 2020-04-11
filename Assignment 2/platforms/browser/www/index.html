@@ -3,24 +3,79 @@
 	<head>
 		<!-- Include meta tag to ensure proper rendering and touch zooming -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="stylesheet.css" />
-
+	
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		
+		<script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
 
 		<script>
-			function addMedToList(){
-				var medName = $("#medname").val();
-				var medTime = $("#firstdose").val();
-				alert(medName +": "  + medTime);
-				
-			}
-		</script>
-	</head>
+		
 	
-	<body>
-		<div data-role="page" id="pageone" style="background-color:#fdfbfd">        
+		//var med = [[]];
+		var med = {};
+			function addMedToList1(){
+				 medName1 = $("#medname1").val();
+				// medTime1 = $("#spin").val();
+				h = $("#hours").val();
+				m = $("#minutes").val();
+				s = $("#seconds").val();
+				time = h + "h:" + m + "m";
+				med[medName1] = time;
+				alert(JSON.stringify(med));
+				
+			
+			
+			}
+			
+			
+		//shows a list of the meds
+			function showMedList1(){
+				$.mobile.changePage("#pagetwo");
+				//$("#allMeds").text(JSON.stringify(med));//keep this
+				
+				//output = "";
+				//data = "";
+
+				for(var key in med){
+					//output += key + "-> " + med[key] + "<hr/>";
+
+					data = key + ": " + med[key];
+					$('<li>').append('<a href="#" class="ui-btn">' + data + '</a>').appendTo("#medlist"); 
+					
+				}
+				//$("#allMeds").html(output);
+			}
+			
+	
+			
+		//function for clock
+			function startTime() {
+			var today = new Date();
+			var h = today.getHours();
+			var m = today.getMinutes();
+			var s = today.getSeconds();
+			m = checkTime(m);
+			s = checkTime(s);
+			document.getElementById('txt').innerHTML =
+			h + ":" + m + ":" + s ;
+			var t = setTimeout(startTime, 500);
+			}
+			
+			function checkTime(i) {
+			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+			return i;
+			}
+			
+			
+			$(document).ready(startTime);
+		//$( window ).on( "load", startTime );
+		</script>
+		</head>
+		
+		<body>
+		<div data-role="page" id="pageone">        
 			<div data-role="header">
 				<div class="ui-grid-a"><!--2 column grid-->
 					<!--first column-->
@@ -30,143 +85,184 @@
 							<a href="#" data-role="button" data-icon="arrow-l">Back</a>
 						</div>
 					</div>
-					<div class="ui-block-b">
-						<div data-role="controlgroup" data-type="horizontal">
-							<a href="#" data-role="button" data-icon="delete">Delete</a>
-							<a href="#" data-role="button" data-icon="check">Save</a>
-						</div>
-					</div>
+					
 	
 				</div>
 			</div>
-
+			
 			<div data-role="main" class="ui-content">
-				<a href="#pagetwo"> go to page 2</a>
-				<p>Use this form to create your medicine list</p>
-
+			
+							<div id="txt"></div>
+							<div id="demo"></div>
+							<div class="timer-display">
+								<p id="timer"></p>
+							</div>
+							
 				<div data-role="collapsible-set">
-				 <div data-role="collapsible" data-collapsed="true">
-					<!--automatically becomes a button-->
-					<h3>Add medication 1</h3>
-					<form method="post" action="#">
-						<div class="ui-field-contain">
-						  <label for="medname" data-corners="true" data-shadow="true">Medicine name:</label>
-						  <input type="text" name="medname" id="medname" data-corners="true" data-shadow="true">
-							
-						  <label for="firstdose"data-corners="true" data-shadow="true" >First dose:</label>
-						  <input type="time" name="firstdose" id="firstdose" data-corners="true" data-shadow="true">
-						  <label for="2nddose" data-corners="true" data-shadow="true">Second dose:</label>
-						  <input type="time" name="2nddose" id="2nddose" data-corners="true" data-shadow="true">
-						  <label for="3rddose" data-corners="true" data-shadow="true">Third dose dose:</label>
-						  <input type="time" name="3rddose" id="3rddose" data-corners="true" data-shadow="true">
-						  <label for="4thdose" ata-corners="true" data-shadow="true" >Fourth dose:</label>
-						  <input type="time" name="4thdose" id="4thdose" data-corners="true" data-shadow="true">
-						  <label for="5thdose" data-corners="true" data-shadow="true">Fifth dose:</label>
-						  <input type="time" name="5thdose" id="5thdose" data-corners="true" data-shadow="true">
-						</div>
-						<button class="ui-btn ui-shadow" data-corners="true" data-shadow="true" data-inlin="true">Add Med</button>
-						<input type="submit" value="Add Med" onclick="addMedToList()">
-					  </form>
-					  
-					</div>
-			
 					<div data-role="collapsible" data-collapsed="true">
-					<!--automatically becomes a button-->
-					<h3>Add medication 2</h3>
+						<!--automatically becomes a button-->
+					<h3>Add medication</h3>
 					<form method="post" action="#">
 						<div class="ui-field-contain">
-						  <label for="medname" data-corners="true" data-shadow="true">Medicine name:</label>
-						  <input type="text" name="medname" id="medname"data-corners="true" data-shadow="true" > 
-							
-						  <label for="firstdose" data-corners="true" data-shadow="true">First dose:</label>
-						  <input type="time" name="firstdose" id="firstdose" data-corners="true" data-shadow="true">
-						  <label for="2nddose">Second dose:</label>
-						  <input type="time" name="2nddose" id="2nddose" data-corners="true" data-shadow="true">
-						  <label for="3rddose">Third dose dose:</label>
-						  <input type="time" name="3rddose" id="3rddose" data-corners="true" data-shadow="true" >
-						  <label for="4thdose">Fourth dose:</label>
-						  <input type="time" name="4thdose" id="4thdose" data-corners="true" data-shadow="true">
-						  <label for="5thdose">Fifth dose:</label>
-						  <input type="time" name="5thdose" id="5thdose" data-corners="true" data-shadow="true">
-						</div>
-						<button class="ui-btn ui-shadow" data-corners="true" data-shadow="true">Add Med</button>
-					  </form>
-					</div>
+							<label for="medname1" data-corners="true" data-shadow="true">Medicine name:</label>
+							<input type="text" name="medname1" id="medname1" data-corners="true" data-shadow="true">
+						
+							<!-- <label for="spin">next dose</label>-->
+							<!-- <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="12" />-->
+								<select name="hours" id="hours">
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+								</select>
+								<select name="minutes" id="minutes">
+									<option value="0">0</option>
+									
+									<option value="15">15</option>
+								
+									<option value="30">30</option>
+									
+									<option value="45">45</option>
+									
+									<option value="59">59</option>
+								</select>
+								<select name="seconds" id="seconds">
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+									<option value="32">32</option>
+									<option value="33">33</option>
+									<option value="34">34</option>
+									<option value="35">35</option>
+									<option value="36">36</option>
+									<option value="37">37</option>
+									<option value="38">38</option>
+									<option value="39">39</option>
+									<option value="40">40</option>
+									<option value="41">41</option>
+									<option value="42">42</option>
+									<option value="43">43</option>
+									<option value="44">44</option>
+									<option value="45">45</option>
+									<option value="46">46</option>
+									<option value="47">47</option>
+									<option value="48">48</option>
+									<option value="49">49</option>
+									<option value="50">50</option>
+									<option value="51">51</option>
+									<option value="52">52</option>
+									<option value="53">53</option>
+									<option value="54">54</option>
+									<option value="55">55</option>
+									<option value="56">56</option>
+									<option value="57">57</option>
+									<option value="58">58</option>
+									<option value="59">59</option>
+								</select><br>
+							<button class="start-timer" id="startTimer">Start Timer</button>
+							<script>
+								var hours = $("#hours").val();
+								var minutes = $("#minutes").val();
+								var seconds = 0;
+								var interval = null;
 
-					<div data-role="collapsible" data-collapsed="true">
-					<!--automatically becomes a button-->
-					<h3>Add medication 3</h3>
-					<form method="post" action="#">
-						<div class="ui-field-contain">
-						  <label for="medname" data-corners="true" data-shadow="true">Medicine name:</label>
-						  <input type="text" name="medname" id="medname" data-corners="true" data-shadow="true" >
-							
-						  <label for="firstdose"data-corners="true" data-shadow="true" >First dose:</label>
-						  <input type="time" name="firstdose" id="firstdose" data-corners="true" data-shadow="true">
-						  <label for="2nddose"data-corners="true" data-shadow="true" >Second dose:</label>
-						  <input type="time" name="2nddose" id="2nddose"data-corners="true" data-shadow="true" >
-						  <label for="3rddose" data-corners="true" data-shadow="true">Third dose dose:</label>
-						  <input type="time" name="3rddose" id="3rddose" data-corners="true" data-shadow="true">
-						  <label for="4thdose"data-corners="true" data-shadow="true" >Fourth dose:</label>
-						  <input type="time" name="4thdose" id="4thdose" data-corners="true" data-shadow="true">
-						  <label for="5thdose"data-corners="true" data-shadow="true" >Fifth dose:</label>
-						  <input type="time" name="5thdose" id="5thdose" data-corners="true" data-shadow="true">
+								document.getElementById('hours').addEventListener('change', e => {
+									hours = +e.target.value;
+								});
+
+								document.getElementById('minutes').addEventListener('change', e => {
+									minutes = +e.target.value;
+								});
+
+								document.getElementById('seconds').addEventListener('change', e => {
+									seconds = +e.target.value;
+								});
+
+								document.getElementById('startTimer').addEventListener('click', () => {
+									var timeInSeconds = (hours * 60 * 60) +
+									(minutes * 60) +
+									seconds;
+
+								  var displayTime = () => {
+									var displayHours = Math.floor(timeInSeconds / (60 * 60));
+									var remainder = timeInSeconds - (displayHours * 60 * 60);
+									var displayMinutes = Math.floor(remainder / 60);
+									var displaySeconds = remainder - (displayMinutes * 60);
+									document.getElementById("timer").innerHTML = displayHours + " : " +
+										displayMinutes + " : " + displaySeconds;
+								  };
+									interval = setInterval(() => {
+									displayTime();
+									timeInSeconds -= 1;
+									if (timeInSeconds < 0) {
+										clearInterval(interval);
+									}
+								  }, 1000);
+								});
+							</script>
+					</form>
+					
+						 <!-- <button onclick="addMedToList1()">Add med</button> -->
+						  <button onclick="addMedToList1()()">Add med</button>
+						  
 						</div>
-						<button class="ui-btn ui-shadow" data-corners="true" data-shadow="true" >Add Med</button >
-					  </form>
+						
 					</div>
-					<div data-role="collapsible" data-collapsed="true">
-					<!--automatically becomes a button-->
-					<h3>Add medication 4</h3>
-					<form method="post" action="#">
-						<div class="ui-field-contain">
-						  <label for="medname" data-corners="true" data-shadow="true">Medicine name:</label>
-						  <input type="text" name="medname" id="medname"  data-corners="true">
-							
-						  <label for="firstdose"data-corners="true" data-shadow="true" >First dose:</label>
-						  <input type="time" name="firstdose" id="firstdose" data-corners="true" data-shadow="true">
-						  <label for="2nddose" data-corners="true" data-shadow="true">Second dose:</label>
-						  <input type="time" name="2nddose" id="2nddose" data-corners="true" data-shadow="true">
-						  <label for="3rddose"data-corners="true" data-shadow="true" >Third dose dose:</label>
-						  <input type="time" name="3rddose" id="3rddose" data-corners="true" data-shadow="true">
-						  <label for="4thdose" data-corners="true" data-shadow="true">Fourth dose:</label>
-						  <input type="time" name="4thdose" id="4thdose" data-corners="true" data-shadow="true">
-						  <label for="5thdose" data-corners="true" data-shadow="true">Fifth dose:</label>
-						  <input type="time" name="5thdose" id="5thdose" data-corners="true" data-shadow="true">
-						</div>
-						<button class="ui-btn ui-shadow"data-corners="true" data-shadow="true" >Add Med</button>
-					  </form>
-					</div>
-					<div data-role="collapsible" data-collapsed="true">
-					<!--automatically becomes a button-->
-					<h3>Add medication 5</h3>
-					<form method="post" action="#">
-						<div class="ui-field-contain">
-						  <label for="medname" data-corners="true" data-shadow="true">Medicine name:</label>
-						  <input type="text" name="medname" id="medname" data-corners="true" data-shadow="true">
-							
-						  <label for="firstdose" data-corners="true" data-shadow="true">First dose:</label>
-						  <input type="time" name="firstdose" id="firstdose" data-corners="true" data-shadow="true">
-						  <label for="2nddose" data-corners="true" data-shadow="true">Second dose:</label>
-						  <input type="time" name="2nddose" id="2nddose" data-corners="true" data-shadow="true">
-						  <label for="3rddose" data-corners="true" data-shadow="true">Third dose dose:</label>
-						  <input type="time" name="3rddose" id="3rddose" data-corners="true" data-shadow="true">
-						  <label for="4thdose" data-corners="true" data-shadow="true">Fourth dose:</label>
-						  <input type="time" name="4thdose" id="4thdose" data-corners="true" data-shadow="true">
-						  <label for="5thdose"data-corners="true" data-shadow="true" >Fifth dose:</label>
-						  <input type="time" name="5thdose" id="5thdose" data-corners="true" data-shadow="true">
-						</div>
-						<button class="ui-btn ui-shadow" data-corners="true" data-shadow="true">Add Med</button>
-					  </form>
-					</div>
+					
 				</div>
+				<input type="submit" value="show med list" data-inline="true" onclick="showMedList1()">
+				
 			</div>
-
 			
-			
-			<div data-role="footer" data-position="fixed" data-fullscreen="true">&copy; 15037963   2020</div>
 		</div>
-		
 		
 		<!--second page -->
 		<div data-role="page" id="pagetwo">
@@ -179,21 +275,24 @@
 							<a href="#" data-role="button" data-icon="arrow-l">Back</a>
 						</div>
 					</div>
-					<div class="ui-block-b">
-						<div data-role="controlgroup" data-type="horizontal">
-							<a href="#" data-role="button" data-icon="delete">Delete</a>
-							<a href="#" data-role="button" data-icon="check">Save</a>
-						</div>
-					</div>
+					
 	
 				</div>
 			</div>
 			<div data-role="main" class="ui-content">
 				<a href="#pageone"> go to page 1</a>
-			</div>
+				
+				
+				<div id="allMeds">
+					<ul data-role="listview" data-inset="true" id="medlist"></ul> 
+				</div> 
+		
 			
-			<div data-role="footer" data-position="fixed" data-fullscreen="true">&copy; 15037963   2020</div>
+				<div data-role="footer" data-position="fixed" data-fullscreen="true">&copy; 15037963   2020</div>
+			</div>
+		
 		</div>
-	</body>
-	
-</html>	
+			
+			
+			</body>
+			</html>
