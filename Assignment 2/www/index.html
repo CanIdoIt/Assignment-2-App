@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 	<head>
+		<meta http-equiv="content-Type" content="text/html; charset= UTF-8">
 		<!-- Include meta tag to ensure proper rendering and touch zooming -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -8,10 +9,13 @@
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 		
-		<script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
-
 		<script>
+			
+		//This method initialises input[type='text'] as a mobile text input when the framework is initialised.
+		$( document ).bind("mobileinit", function(){
+			$.mobile.textinput.prototype.options.initSelector = "input[type='text']";
 		
+		});
 	
 		//med is a dictionary to store med name key and next dose time value
 		var med = {};
@@ -48,16 +52,42 @@
 			return i;
 			}
 			
-			
+			//required for the digital clock start when app is loaded
 			$(document).ready(startTime);
 		//$( window ).on( "load", startTime );
 		</script>
 		
 		<style>
 			.timer-display{
+				background-color: #e6ffff;
 				text-align: center;
 				border: 2px solid gray;
 				border-radius: 5px;
+				
+			}
+			#timer{
+				 text-align: center;
+				font-size: 30px;
+				color:#e6ac00;
+			}
+			#timer2{
+				 text-align: center;
+				font-size: 30px;
+				color:#e6ac00;
+			}
+			#txt{
+				font-size: 30px;
+				font-style: bold;
+			}
+			#medicinename{
+				 text-align: center;
+				font-size: 30px;
+				color:red;
+			}
+			#medicinename2{
+				 text-align: center;
+				font-size: 30px;
+				color:red;
 			}
 		</style>
 		</head>
@@ -95,13 +125,13 @@
 					<h3>Add medication</h3>
 					<form method="post" action="#">
 						<div class="ui-field-contain">
-							<label for="medname1" data-corners="true" data-shadow="true">Medicine name:</label>
-							<input type="text" name="medname1" id="medname1" data-corners="true" data-shadow="true" data-inline="true">
+							<label for="medname1" data-corners="true" data-shadow="true"><center>Medicine Name</center></label>
+							<input type="text" name="medname1" id="medname1" data-corners="true" data-shadow="true" data-inline="true"><br>
 						
 							<!-- <label for="spin">next dose</label>-->
 							<!-- <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="12" />-->
-							<label for="hours" data-corners="true" data-shadow="true" >hours:</label>
-								<select name="hours" id="hours">
+							<label for="hours" data-corners="true" data-shadow="true"><center>Hours</center></label>
+								<select name="hours" id="hours" >
 									<option value="0">0</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
@@ -115,10 +145,20 @@
 									<option value="10">10</option>
 									<option value="11">11</option>
 									<option value="12">12</option>
-									
-								</select><p></p>
-								<label for="minutes" data-corners="true" data-shadow="true">minutes:</label>
-								<select name="minutes" id="minutes">
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+								</select><br><p></p>
+								<label for="minutes" data-corners="true" data-shadow="true"><center>Minutes</center></label>
+								<select name="minutes" id="minutes" >
 									<option value="0">0</option>
 									<option value="1">1</option>
 									<option value="15">15</option>
@@ -128,9 +168,9 @@
 									<option value="45">45</option>
 									
 									<option value="59">59</option>
-								</select><br>
+								</select>
 								<select name="seconds" id="seconds">
-									<!-- input not required as we need hours and minutes only-->
+									
 								</select><br>
 							
 							<script>
@@ -178,8 +218,9 @@
 										clearInterval(interval);
 										document.getElementById("timer").innerHTML = "0" + ":" + "0" + ":" + "0";
 										//alert("Time to take: " + JSON.stringify(med1));
-											//vibrates for 1 second, pauses for 1 second, then vibrates again for another 1 second
+											
 											document.getElementById('medicinename').innerHTML = "Time for " + medName1;
+											//vibrates for 1 second, pauses for 1 second, then vibrates again for another 1 second
 											navigator.vibrate([1000,1000,1000]);
 									}
 								  }, 1000);
@@ -188,7 +229,7 @@
 					</form>
 					
 						 <!-- <button onclick="addMedToList1()">Add med</button> -->
-						  <button onclick="addMedToList1()()">Add med</button><br>
+						  <button onclick="addMedToList1()">Add Med</button><br>
 						  <button class="start-timer" id="startTimer">Start Timer</button>
 						</div>
 						
@@ -203,12 +244,12 @@
 					<h3>Add medication</h3>
 					<form method="post" action="#">
 						<div class="ui-field-contain">
-							<label for="medname2" data-corners="true" data-shadow="true">Medicine name:</label>
-							<br><input type="text" name="medname2" id="medname2" data-corners="true" data-shadow="true" data-inline="true">
+							<label for="medname2" data-corners="true" data-shadow="true"><center>Medication Name</center></label>
+							<input type="text" name="medname2" id="medname2" data-corners="true" data-shadow="true" data-inline="true"><br>
 						
 							<!-- <label for="spin">next dose</label>-->
 							<!-- <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="12" />-->
-							<label for="hours2" data-corners="true" data-shadow="true" >hours:</label>
+							<label for="hours2" data-corners="true" data-shadow="true"><center>Hours</center></label>
 								<select name="hours2" id="hours2" >
 									<option value="0">0</option>
 									<option value="1">1</option>
@@ -234,8 +275,8 @@
 									<option value="21">21</option>
 									<option value="22">22</option>
 									<option value="23">23</option>
-								</select><p></p>
-								<label for="minutes2" data-corners="true" data-shadow="true"  >minutes:</label>
+								</select><br><p></p>
+								<label for="minutes2" data-corners="true" data-shadow="true"><center>Minutes</center></label>
 								<select name="minutes2" id="minutes2">
 									<option value="0">0</option>
 									<option value="1">1</option>
@@ -301,7 +342,7 @@
 										//alert("Time to take: " + JSON.stringify(med1));
 											
 											document.getElementById('medicinename2').innerHTML = "Time for " + medName2;
-											
+											//vibrates for 1 second, pauses for 1 second, then vibrates again for another 1 second
 											navigator.vibrate([1000,1000,1000]);
 											
 										
@@ -312,7 +353,7 @@
 					</form>
 					
 						 <!-- <button onclick="addMedToList1()">Add med</button> -->
-						  <button onclick="addMedToList1()">Add med</button><br>
+						  <button onclick="addMedToList1()">Add Med</button><br>
 						  <button class="start-timer" id="startTimer2">Start Timer</button>
 						  
 						</div>
@@ -330,5 +371,5 @@
 		
 			
 			
-			</body>
-			</html>
+	</body>
+</html>

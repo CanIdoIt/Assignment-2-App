@@ -1,6 +1,7 @@
+
 <!DOCTYPE html>
-<html>
 	<head>
+		<meta http-equiv="content-Type" content="text/html; charset= UTF-8">
 		<!-- Include meta tag to ensure proper rendering and touch zooming -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -8,49 +9,32 @@
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 		
-		<script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
-
 		<script>
+			
+		//This method initialises input[type='text'] as a mobile text input when the framework is initialised.
+		$( document ).bind("mobileinit", function(){
+			$.mobile.textinput.prototype.options.initSelector = "input[type='text']";
 		
+		});
 	
-		//var med = [[]];
+		//med is a dictionary to store med name key and next dose time value
 		var med = {};
 			function addMedToList1(){
-				 medName1 = $("#medname1").val();
+				 medicine = $("#medname1").val();
 				// medTime1 = $("#spin").val();
 				h = $("#hours").val();
 				m = $("#minutes").val();
 				s = $("#seconds").val();
 				time = h + "h:" + m + "m";
-				med[medName1] = time;
+				med[medicine] = time;
 				alert(JSON.stringify(med));
 				
 			
 			
 			}
 			
-			
-		//shows a list of the meds
-			function showMedList1(){
-				$.mobile.changePage("#pagetwo");
-				//$("#allMeds").text(JSON.stringify(med));//keep this
-				
-				//output = "";
-				//data = "";
-
-				for(var key in med){
-					//output += key + "-> " + med[key] + "<hr/>";
-
-					data = key + ": " + med[key];
-					$('<li>').append('<a href="#" class="ui-btn">' + data + '</a>').appendTo("#medlist"); 
-					
-				}
-				//$("#allMeds").html(output);
-			}
-			
-	
-			
-		//function for clock
+		
+		//function for clock - Clock has been added to th UI for more of a convenience for users to reference
 			function startTime() {
 			var today = new Date();
 			var h = today.getHours();
@@ -72,6 +56,40 @@
 			$(document).ready(startTime);
 		//$( window ).on( "load", startTime );
 		</script>
+		
+		<style>
+			.timer-display{
+				background-color: #e6ffff;
+				text-align: center;
+				border: 2px solid gray;
+				border-radius: 5px;
+				
+			}
+			#timer{
+				 text-align: center;
+				font-size: 30px;
+				color:#e6ac00;
+			}
+			#timer2{
+				 text-align: center;
+				font-size: 30px;
+				color:#e6ac00;
+			}
+			#txt{
+				font-size: 30px;
+				font-style: bold;
+			}
+			#medicinename{
+				 text-align: center;
+				font-size: 30px;
+				color:red;
+			}
+			#medicinename2{
+				 text-align: center;
+				font-size: 30px;
+				color:red;
+			}
+		</style>
 		</head>
 		
 		<body>
@@ -82,7 +100,7 @@
 					<div class="ui-block-a">
 						<div data-role="controlgroup" data-type="horizontal">
 							<a href="#pageone" data-role="button" data-icon="home">Home</a>
-							<a href="#" data-role="button" data-icon="arrow-l">Back</a>
+							<a href="#pageone" data-role="button" data-icon="arrow-l">Back</a>
 						</div>
 					</div>
 					
@@ -93,9 +111,12 @@
 			<div data-role="main" class="ui-content">
 			
 							<div id="txt"></div>
-							<div id="demo"></div>
 							<div class="timer-display">
 								<p id="timer"></p>
+								<P id="medicinename"></p>
+								
+								<p id="timer2"></p>
+								<P id="medicinename2"></p>
 							</div>
 							
 				<div data-role="collapsible-set">
@@ -104,12 +125,13 @@
 					<h3>Add medication</h3>
 					<form method="post" action="#">
 						<div class="ui-field-contain">
-							<label for="medname1" data-corners="true" data-shadow="true">Medicine name:</label>
-							<input type="text" name="medname1" id="medname1" data-corners="true" data-shadow="true">
+							<label for="medname1" data-corners="true" data-shadow="true"><center>Medicine Name</center></label>
+							<input type="text" name="medname1" id="medname1" data-corners="true" data-shadow="true" data-inline="true"><br>
 						
 							<!-- <label for="spin">next dose</label>-->
 							<!-- <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="12" />-->
-								<select name="hours" id="hours">
+							<label for="hours" data-corners="true" data-shadow="true"><center>Hours</center></label>
+								<select name="hours" id="hours" >
 									<option value="0">0</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
@@ -134,10 +156,11 @@
 									<option value="21">21</option>
 									<option value="22">22</option>
 									<option value="23">23</option>
-								</select>
-								<select name="minutes" id="minutes">
+								</select><br><p></p>
+								<label for="minutes" data-corners="true" data-shadow="true"><center>Minutes</center></label>
+								<select name="minutes" id="minutes" >
 									<option value="0">0</option>
-									
+									<option value="1">1</option>
 									<option value="15">15</option>
 								
 									<option value="30">30</option>
@@ -147,72 +170,21 @@
 									<option value="59">59</option>
 								</select>
 								<select name="seconds" id="seconds">
-									<option value="0">0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">12</option>
-									<option value="13">13</option>
-									<option value="14">14</option>
-									<option value="15">15</option>
-									<option value="16">16</option>
-									<option value="17">17</option>
-									<option value="18">18</option>
-									<option value="19">19</option>
-									<option value="20">20</option>
-									<option value="21">21</option>
-									<option value="22">22</option>
-									<option value="24">24</option>
-									<option value="25">25</option>
-									<option value="26">26</option>
-									<option value="27">27</option>
-									<option value="28">28</option>
-									<option value="29">29</option>
-									<option value="30">30</option>
-									<option value="31">31</option>
-									<option value="32">32</option>
-									<option value="33">33</option>
-									<option value="34">34</option>
-									<option value="35">35</option>
-									<option value="36">36</option>
-									<option value="37">37</option>
-									<option value="38">38</option>
-									<option value="39">39</option>
-									<option value="40">40</option>
-									<option value="41">41</option>
-									<option value="42">42</option>
-									<option value="43">43</option>
-									<option value="44">44</option>
-									<option value="45">45</option>
-									<option value="46">46</option>
-									<option value="47">47</option>
-									<option value="48">48</option>
-									<option value="49">49</option>
-									<option value="50">50</option>
-									<option value="51">51</option>
-									<option value="52">52</option>
-									<option value="53">53</option>
-									<option value="54">54</option>
-									<option value="55">55</option>
-									<option value="56">56</option>
-									<option value="57">57</option>
-									<option value="58">58</option>
-									<option value="59">59</option>
+									
 								</select><br>
-							<button class="start-timer" id="startTimer">Start Timer</button>
+							
 							<script>
+								//dictionary key=med name value= time to take med
+								var med1 = {}
+								
+								medName1 = $("#medname1").val();
 								var hours = $("#hours").val();
 								var minutes = $("#minutes").val();
 								var seconds = 0;
 								var interval = null;
+								
+								time = hours + "h:" + minutes + "m";
+								med1[medName1] = time;
 
 								document.getElementById('hours').addEventListener('change', e => {
 									hours = +e.target.value;
@@ -244,6 +216,12 @@
 									timeInSeconds -= 1;
 									if (timeInSeconds < 0) {
 										clearInterval(interval);
+										document.getElementById("timer").innerHTML = "0" + ":" + "0" + ":" + "0";
+										//alert("Time to take: " + JSON.stringify(med1));
+											
+											document.getElementById('medicinename').innerHTML = "Time for " + medName1;
+											//vibrates for 1 second, pauses for 1 second, then vibrates again for another 1 second
+											navigator.vibrate([1000,1000,1000]);
 									}
 								  }, 1000);
 								});
@@ -251,47 +229,146 @@
 					</form>
 					
 						 <!-- <button onclick="addMedToList1()">Add med</button> -->
-						  <button onclick="addMedToList1()()">Add med</button>
-						  
+						  <button onclick="addMedToList1()">Add Med</button><br>
+						  <button class="start-timer" id="startTimer">Start Timer</button>
 						</div>
 						
 					</div>
 					
 				</div>
-				<input type="submit" value="show med list" data-inline="true" onclick="showMedList1()">
+				<!-- <input type="submit" value="show med list" data-inline="true" onclick="showMedList1()"> -->
 				
-			</div>
-			
-		</div>
-		
-		<!--second page -->
-		<div data-role="page" id="pagetwo">
-			<div data-role="header">
-				<div class="ui-grid-a"><!--2 column grid-->
-					<!--first column-->
-					<div class="ui-block-a">
-						<div data-role="controlgroup" data-type="horizontal">
-							<a href="#pageone" data-role="button" data-icon="home">Home</a>
-							<a href="#" data-role="button" data-icon="arrow-l">Back</a>
+				<div data-role="collapsible-set">
+					<div data-role="collapsible" data-collapsed="true">
+						<!--automatically becomes a button-->
+					<h3>Add medication</h3>
+					<form method="post" action="#">
+						<div class="ui-field-contain">
+							<label for="medname2" data-corners="true" data-shadow="true"><center>Medication Name</center></label>
+							<input type="text" name="medname2" id="medname2" data-corners="true" data-shadow="true" data-inline="true"><br>
+						
+							<!-- <label for="spin">next dose</label>-->
+							<!-- <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="12" />-->
+							<label for="hours2" data-corners="true" data-shadow="true"><center>Hours</center></label>
+								<select name="hours2" id="hours2" >
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+								</select><br><p></p>
+								<label for="minutes2" data-corners="true" data-shadow="true"><center>Minutes</center></label>
+								<select name="minutes2" id="minutes2">
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="15">15</option>
+								
+									<option value="30">30</option>
+									
+									<option value="45">45</option>
+									
+									<option value="59">59</option>
+								</select>
+								<select name="seconds2" id="seconds2">
+									
+								</select><br>
+							
+							<script>
+							//dictionary key=med name value= time to take med
+								var med2 = {}
+								
+								medName2 = $("#medname2").val();
+								var hours2 = $("#hours2").val();
+								var minutes2 = $("#minutes2").val();
+								var seconds2 = 0;
+								var interval = null;
+								
+								time2 = hours2 + "h:" + minutes2 + "m";
+								med2[medName2] = time2;
+								med[medName2] = time2;
+
+								document.getElementById('hours2').addEventListener('change', e => {
+									hours2 = +e.target.value;
+								});
+
+								document.getElementById('minutes2').addEventListener('change', e => {
+									minutes2 = +e.target.value;
+								});
+
+								document.getElementById('seconds2').addEventListener('change', e => {
+									seconds2 = +e.target.value;
+								});
+
+								document.getElementById('startTimer2').addEventListener('click', () => {
+									var timeInSeconds = (hours2 * 60 * 60) +
+									(minutes2 * 60) +
+									seconds2;
+
+								  var displayTime = () => {
+									var displayHours = Math.floor(timeInSeconds / (60 * 60));
+									var remainder = timeInSeconds - (displayHours * 60 * 60);
+									var displayMinutes = Math.floor(remainder / 60);
+									var displaySeconds = remainder - (displayMinutes * 60);
+									document.getElementById("timer2").innerHTML = displayHours + " : " +
+										displayMinutes + " : " + displaySeconds;
+								  };
+									interval = setInterval(() => {
+									displayTime();
+									timeInSeconds -= 1;
+									if (timeInSeconds < 0) {
+										clearInterval(interval);
+										//alert
+										
+										document.getElementById("timer2").innerHTML = "0" + ":" + "0" + ":" + "0";
+										//alert("Time to take: " + JSON.stringify(med1));
+											
+											document.getElementById('medicinename2').innerHTML = "Time for " + medName2;
+											
+											navigator.vibrate([1000,1000,1000]);
+											
+										
+									}
+								  }, 1000);
+								});
+							</script>
+					</form>
+					
+						 <!-- <button onclick="addMedToList1()">Add med</button> -->
+						  <button onclick="addMedToList1()">Add Med</button><br>
+						  <button class="start-timer" id="startTimer2">Start Timer</button>
+						  
 						</div>
+						
 					</div>
 					
-	
+					
 				</div>
+				
 			</div>
-			<div data-role="main" class="ui-content">
-				<a href="#pageone"> go to page 1</a>
-				
-				
-				<div id="allMeds">
-					<ul data-role="listview" data-inset="true" id="medlist"></ul> 
-				</div> 
-		
+			<div data-role="footer" data-position="fixed" data-fullscreen="true">&copy; 15037963   2020</div>
 			
-				<div data-role="footer" data-position="fixed" data-fullscreen="true">&copy; 15037963   2020</div>
-			</div>
-		
 		</div>
+		
+		
 			
 			
 			</body>
