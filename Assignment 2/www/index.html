@@ -3,12 +3,17 @@
 	<head>
 		<meta http-equiv="content-Type" content="text/html; charset= UTF-8">
 		<!-- Include meta tag to ensure proper rendering and touch zooming -->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-		
+		<!-- <meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" /> -->
+		<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 		<script>
 			
 		//This method initialises input[type='text'] as a mobile text input when the framework is initialised.
@@ -54,7 +59,11 @@
 			
 			//required for the digital clock start when app is loaded
 			$(document).ready(startTime);
-		//$( window ).on( "load", startTime );
+			//plugin for vibrate function of mobile device
+			document.addEventListener("deviceready", onDeviceReady, false);
+    			function onDeviceReady() {
+        		console.log(navigator.vibrate);
+    		}
 		</script>
 		
 		<style>
@@ -362,6 +371,12 @@
 			</div>
 			<div data-role="footer" data-position="fixed" data-fullscreen="true">&copy; 15037963   2020</div>
 			
-		</div>		
+		</div>	
+		
+	<!-- <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script> -->
 	</body>
 </html>
